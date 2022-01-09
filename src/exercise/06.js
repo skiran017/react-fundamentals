@@ -5,6 +5,15 @@ import * as React from 'react'
 
 function UsernameForm({onSubmitUsername}) {
   // 🐨 add a submit event handler here (`handleSubmit`).
+  // const inputRef = React.useRef(null)
+  const [value, setValue] = React.useState('')
+  const [error, setError] = React.useState()
+
+  const handleSubmit = event => {
+    event.preventDefault()
+    // onSubmitUsername(event.target.elements[0].value)
+    onSubmitUsername(value)
+  }
   // 💰 Make sure to accept the `event` as an argument and call
   // `event.preventDefault()` to prevent the default behavior of form submit
   // events (which refreshes the page).
@@ -18,14 +27,45 @@ function UsernameForm({onSubmitUsername}) {
   // 🐨 add the onSubmit handler to the <form> below
 
   // 🐨 make sure to associate the label to the input.
-  // to do so, set the value of 'htmlFor' prop of the label to the id of input
+  // to do so, set the value of 'htmlFor' prop of the label to the id of input.
+  // const handleChange = e => {
+  //   const {value} = e.target
+
+  //   const isValid = value === value.toLowerCase()
+
+  //   setError(isValid ? null : 'Username must be lower case')
+  // }
+  // return (
+  //   <form onSubmit={handleSubmit}>
+  //     <div>
+  //       <label>Username:</label>
+  //       {/* <input ref={inputRef} type="text" /> */}
+  //       <input onChange={handleChange} type="text" />
+  //       <div role="alert" style={{color: 'red'}}>
+  //         {error}
+  //       </div>
+  //     </div>
+  //     <button disabled={error ? true : false} type="submit">
+  //       Submit
+  //     </button>
+  //   </form>
+  // )
+  const handleChange = e => {
+    setValue(e.target.value.toLowerCase())
+  }
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div>
         <label>Username:</label>
-        <input type="text" />
+        {/* <input ref={inputRef} type="text" /> */}
+        <input value={value} onChange={handleChange} type="text" />
+        <div role="alert" style={{color: 'red'}}>
+          {error}
+        </div>
       </div>
-      <button type="submit">Submit</button>
+      <button disabled={error ? true : false} type="submit">
+        Submit
+      </button>
     </form>
   )
 }
